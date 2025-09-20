@@ -1,10 +1,19 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { products } from '../data/mockData';
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-  const [globalProducts, setGlobalProducts] = useState(products);
+  // Load products from localStorage or use default
+  const [globalProducts, setGlobalProducts] = useState(() => {
+    const savedProducts = localStorage.getItem('botanic-lane-products');
+    return savedProducts ? JSON.parse(savedProducts) : products;
+  });
+
+  // Save to localStorage whenever products change
+  useEffect(() => {
+    localStorage.setItem('botanic-lane-products', JSON.stringify(globalProducts));
+  }, [globalProducts]);
 
   const updateProduct = (productId, updatedProduct) => {
     setGlobalProducts(prevProducts =>
@@ -24,11 +33,17 @@ export const ProductProvider = ({ children }) => {
     );
   };
 
+  const resetProducts = () => {
+    setGlobalProducts(products);
+    localStorage.removeItem('botanic-lane-products');
+  };
+
   const value = {
     products: globalProducts,
     updateProduct,
     addProduct,
-    deleteProduct
+    deleteProduct,
+    resetProducts
   };
 
   return (

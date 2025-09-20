@@ -38,10 +38,10 @@ const Checkout = () => {
         [name]: formattedPhone
       }));
     } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
     }
   };
 
@@ -194,15 +194,15 @@ const Checkout = () => {
                     </div>
                     <div className="col-md-6 mb-3">
                       <label className="form-label">District *</label>
-                      <input
-                        type="text"
-                        className="form-control"
+                    <input
+                      type="text"
+                      className="form-control"
                         name="district"
                         value={formData.district}
-                        onChange={handleInputChange}
+                      onChange={handleInputChange}
                         placeholder="e.g., Nyarugenge, Gasabo, Kicukiro"
-                        required
-                      />
+                      required
+                    />
                     </div>
                   </div>
                   <div className="row">

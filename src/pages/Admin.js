@@ -3,7 +3,7 @@ import { orders } from '../data/mockData';
 import { useProducts } from '../context/ProductContext';
 
 const Admin = () => {
-  const { products: globalProducts, updateProduct, addProduct, deleteProduct } = useProducts();
+  const { products: globalProducts, updateProduct, addProduct, deleteProduct, resetProducts } = useProducts();
   const [activeTab, setActiveTab] = useState('orders');
   const [orderStatus, setOrderStatus] = useState({});
   const [editingProduct, setEditingProduct] = useState(null);
@@ -309,12 +309,26 @@ const Admin = () => {
               <h5 className="mb-0">
                 <i className="fas fa-seedling me-2"></i>Product Management
               </h5>
-              <button 
-                className="btn btn-primary btn-sm"
-                onClick={handleAddProduct}
-              >
-                <i className="fas fa-plus me-1"></i>Add Product
-              </button>
+              <div className="btn-group">
+                <button 
+                  className="btn btn-primary btn-sm"
+                  onClick={handleAddProduct}
+                >
+                  <i className="fas fa-plus me-1"></i>Add Product
+                </button>
+                <button 
+                  className="btn btn-warning btn-sm"
+                  onClick={() => {
+                    if (window.confirm('Are you sure you want to reset all products to original data? This will undo all your changes.')) {
+                      resetProducts();
+                      alert('Products reset to original data!');
+                    }
+                  }}
+                  title="Reset to original products"
+                >
+                  <i className="fas fa-undo me-1"></i>Reset
+                </button>
+              </div>
             </div>
             <div className="card-body">
               <div className="table-responsive">
